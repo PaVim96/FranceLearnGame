@@ -1,14 +1,18 @@
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * class which represents one word with its name and corresponding article
  */
 public class Entry {
-    boolean isMale, isFemale;
-    String wordName;
+    private boolean isMale, isFemale;
+    private String wordName;
+    private String article;
 
 
     public Entry(String name, String article) throws WordErrorException {
         wordName = name;
-        System.out.println(article);
+        this.article = article;
 
         switch(article){
             case "le": isMale = true; break;
@@ -16,21 +20,30 @@ public class Entry {
             default: throw new WordErrorException("Word needs to be either le or la");
         }
     }
+    public static Entry handleInput(Container pane, String word, boolean male, boolean female){
+        Entry result = null;
+        try {
+            if (male){
+                result =  new  Entry(word, "le");
+            }
+            else if (female){
+                result =  new Entry(word, "la");
+            }
+
+        }
+        catch (WordErrorException x){
+            x.printStackTrace();
+        }
+        return result;
+    }
 
     public String getWord(){
         return wordName;
     }
 
-    /**
-     * method which returns the gender of the entry as an in t
-     * @return 0 stands for le aka male and 1 stands for la aka female
-     */
-    public int getGender(){
-        if(isMale)
-            return 0;
-        else
-            return 1;
-    }
+    public String getGender() {return article; }
+
+
 
     /**
      * returns the format I used for writing in a file which consists of all words with their article
@@ -38,13 +51,7 @@ public class Entry {
      * @return returns word and format for writing in a file
      */
     public String getEntryforFile(){
-        String gender = "";
-        if (isMale)
-            gender = "le";
-        else
-            gender = "la";
-
-        return  wordName + " " + ":" + " " + gender + "\r\n";
+        return  wordName + " " + ":" + " " + article + "\r\n";
     }
 
 }

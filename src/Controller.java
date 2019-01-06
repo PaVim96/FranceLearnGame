@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -22,17 +24,25 @@ public class Controller{
     }
 
 
+    public void startGame(Game game){
+        JFrame gameWindow = new JFrame();
+        Container content = gameWindow.getContentPane();
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+    }
 
-    public void addEntry(Entry e){
+
+    public boolean addEntry(Entry e){
          boolean isAlreadyThere = checkExisting(e);
 
          if(!isAlreadyThere){
              entries.add(e);
              writeEntryToFile(e);
+             return true;
          }
          else {
              System.out.printf("Word %s is already there", e.getWord());
              System.out.println();
+             return false;
          }
     }
 

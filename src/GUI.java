@@ -1,11 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 
 public class GUI extends JFrame {
-    Controller control;
+    private Controller control;
 
     public GUI(int width, int height, Controller control){
         this.control = control;
@@ -18,11 +20,30 @@ public class GUI extends JFrame {
      */
     private void setJPanel(JPanel panel){
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        addInfo(panel);
+        addInfo(panel, "On this region you can modify all entries in your list of entries");
         addEntryButtons(panel);
         addShowButton(panel);
         panel.setVisible(true);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    }
+
+    private void setGamingArea(JPanel panel){
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        addInfo(panel, "This area is for the game");
+        // create a game with a default setting of 10 words
+        Game game = new Game(control, 10);
+        addStartButton(panel, game );
+        //addOptionsButtons(panel); //TODO: implement
+        panel.setVisible(true);
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+
+    }
+
+    private void addStartButton(Container pane, Game game ){
+        JButton start = new JButton("Start the game");
+        start.addActionListener(e -> control.startGame(game));
+        pane.add(start);
     }
 
     /**
@@ -30,37 +51,46 @@ public class GUI extends JFrame {
      * @param pane the container panel which is the adding jpanel
      */
     private void addShowButton(Container pane){
-        JButton showEntries = new JButton("click me to show all Entries currently in file");
+        JButton showEntries = new JButton("Show entries");
         showEntries.addActionListener(e -> showEntries());
         pane.add(showEntries);
     }
 
+    /**
+     * method which makes a new window showing all entries in the file
+     */
     private void showEntries(){
-        System.out.println(control.getEntries().size());
         JFrame entryWindow = new JFrame();
         Container pane = entryWindow.getContentPane();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+
+        //Button which can be pressed to close window too
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(e -> closeFrame(entryWindow));
 
         ArrayList<JLabel> entries = new ArrayList<>();
        for(Entry x : control.getEntries()) {
            entries.add(new JLabel(x.getEntryforFile()));
        }
 
-       System.out.println(entries.size());
        for (JLabel i : entries)
            pane.add(i);
 
-
+       pane.add(closeButton);
        entryWindow.setLocationRelativeTo(null);
        entryWindow.setVisible(true);
        entryWindow.pack();
-       entryWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       entryWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     }
 
+    private void closeFrame(JFrame window){
+        window.dispose();
+    }
 
-    private void addInfo(Container pane){
-        JLabel infoText = new JLabel("On this region you can modify all entries in your list of entries");
+
+    private void addInfo(Container pane, String message ){
+        JLabel infoText = new JLabel(message);
         pane.add(infoText);
         pane.add(Box.createRigidArea(new Dimension(1,20)));
 
@@ -71,11 +101,18 @@ public class GUI extends JFrame {
      * @param panel container jpanel
      */
     private void addEntryButtons(JPanel panel){
-        JButton oneEntry = new JButton("Add one entry to list");
-        JButton moreEntry = new JButton("Add multiple entries to list");
+        JButton oneEntry = new JButton("Add one entry");
+        JButton moreEntry = new JButton("Add multiple entries");
 
-        oneEntry.addActionListener(e -> control.addEntry(checkEntryInput(panel)));
-        //moreEntry.addActionListener(e -> control.addListOfEntries(checkMultipleEntryInput(panel)));
+        // adds the action listener to button which shows a message if input entry is already in file
+        oneEntry.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean wasAdded = control.addEntry(checkEntryInput(panel));
+                if (!wasAdded)
+                    JOptionPane.showMessageDialog(panel, "Your input is already in the list of words");
+            }
+        });
         panel.add(oneEntry);
         panel.add(moreEntry);
 
@@ -115,10 +152,11 @@ public class GUI extends JFrame {
     private void initGui(int width, int height){
         setTitle("Learning articles");
         setSize(new Dimension(width, height));
-        setLayout(new BorderLayout());
         Container pane = getContentPane();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
 
         adderPane(pane);
+        gamingPane(pane);
 
         setVisible(true);
         pack();
@@ -135,5 +173,11 @@ public class GUI extends JFrame {
         JPanel entryAdder = new JPanel();
         setJPanel(entryAdder);
         pane.add(entryAdder);
+    }
+
+    private void gamingPane(Container pane){
+        JPanel gamingArea = new JPanel();
+        setGamingArea(gamingArea);
+        pane.add(gamingArea);
     }
 }

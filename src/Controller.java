@@ -32,12 +32,13 @@ public class Controller{
         //makes the HashMap which contains all words of playing words and their article
         HashMap<String, String> playingWordArticle = new HashMap<>();
         // Saves all words in ArrayList
-        ArrayList<String> words = new ArrayList<>();
+        ArrayList<GamingEntry
         for(Entry x : game.getPlayingEntries()){
             String word = x.getWord();
             String article = x.getGender();
             playingWordArticle.put(word, article);
-            words.add(word);
+
+
         }
 
 

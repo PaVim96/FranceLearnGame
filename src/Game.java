@@ -18,6 +18,7 @@ public class Game {
         else
             numberOfWords = wantedNumber;
 
+        allEntries = controller.getEntries();
         makePLayingEntries(numberOfWords);
         percentageScore = 0.0;
         maxPoints = maxNumber;

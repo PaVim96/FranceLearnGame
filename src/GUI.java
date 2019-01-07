@@ -60,28 +60,37 @@ public class GUI extends JFrame {
      * method which makes a new window showing all entries in the file
      */
     private void showEntries(){
-        JFrame entryWindow = new JFrame();
-        Container pane = entryWindow.getContentPane();
-        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        if (control.getEntries().size() != 0) {
+            JFrame entryWindow = new JFrame();
+            Container pane = entryWindow.getContentPane();
+            pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 
-        //Button which can be pressed to close window too
-        JButton closeButton = new JButton("Close");
-        closeButton.addActionListener(e -> closeFrame(entryWindow));
+            //Button which can be pressed to close window too
+            JButton closeButton = new JButton("Close");
+            closeButton.addActionListener(e -> closeFrame(entryWindow));
 
-        ArrayList<JLabel> entries = new ArrayList<>();
-       for(Entry x : control.getEntries()) {
-           entries.add(new JLabel(x.getEntryforFile()));
-       }
+            ArrayList<JLabel> entries = new ArrayList<>();
+            for (Entry x : control.getEntries()) {
+                entries.add(new JLabel(x.getEntryforFile()));
+            }
 
-       for (JLabel i : entries)
-           pane.add(i);
+            for (JLabel i : entries)
+                pane.add(i);
 
-       pane.add(closeButton);
-       entryWindow.setLocationRelativeTo(null);
-       entryWindow.setVisible(true);
-       entryWindow.pack();
-       entryWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+            pane.add(closeButton);
+            entryWindow.setLocationRelativeTo(null);
+            entryWindow.setVisible(true);
+            entryWindow.pack();
+            entryWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        }
+        else {
+            JFrame frame = new JFrame("Empty file");
+            Container content = frame.getContentPane();
+            JOptionPane.showMessageDialog(content,"Your list of entries is empty");
+            frame.pack();
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        }
     }
 
     private void closeFrame(JFrame window){

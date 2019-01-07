@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controller{
 
@@ -28,6 +28,23 @@ public class Controller{
         JFrame gameWindow = new JFrame();
         Container content = gameWindow.getContentPane();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+
+        //makes the HashMap which contains all words of playing words and their article
+        HashMap<String, String> playingWordArticle = new HashMap<>();
+        // Saves all words in ArrayList
+        ArrayList<String> words = new ArrayList<>();
+        for(Entry x : game.getPlayingEntries()){
+            String word = x.getWord();
+            String article = x.getGender();
+            playingWordArticle.put(word, article);
+            words.add(word);
+        }
+
+
+
+        gameWindow.pack();
+        gameWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        gameWindow.setVisible(true);
     }
 
 

@@ -1,6 +1,2 @@
-﻿bar : le
-bouteille : la
-test : la
-test2 : la
-test3 : la
-kek : le
+﻿bouteille : la
+hôtel : le

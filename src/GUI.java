@@ -189,4 +189,5 @@ public class GUI extends JFrame {
         setGamingArea(gamingArea);
         pane.add(gamingArea);
     }
+
 }

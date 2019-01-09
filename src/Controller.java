@@ -29,25 +29,36 @@ public class Controller{
         Container content = gameWindow.getContentPane();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
-        //makes the HashMap which contains all words of playing words and their article
-        HashMap<String, String> playingWordArticle = new HashMap<>();
-        // Saves all words in ArrayList
-        ArrayList<GamingEntry
-        for(Entry x : game.getPlayingEntries()){
-            String word = x.getWord();
-            String article = x.getGender();
-            playingWordArticle.put(word, article);
 
-
+        //make list of GamingEntries which are needed for the game
+        ArrayList<GamingEntry> entriesForGame = makeGamingEntries(game.getPlayingEntries());
+        for(GamingEntry x : entriesForGame){
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+            panel.add(x.getInputArticle());
+            panel.add(x.getWordLabel());
+            content.add(panel);
         }
 
-
-
+        //TODO: Have to think about how to implement the result button
+        //TODO: which means i have to think about how to store the inputs of JTextField
+        gameWindow.setLocationRelativeTo(null);
         gameWindow.pack();
         gameWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         gameWindow.setVisible(true);
     }
 
+    private ArrayList<GamingEntry> makeGamingEntries(ArrayList<Entry> inputEntries){
+          ArrayList<GamingEntry> result = new ArrayList<>();
+        for (Entry x : inputEntries){
+            String word = x.getWord();
+            String article = x.getGender();
+            GamingEntry i = new GamingEntry(word,article);
+            result.add(i);
+        }
+
+          return result;
+    }
 
     public boolean addEntry(Entry e){
          boolean isAlreadyThere = checkExisting(e);

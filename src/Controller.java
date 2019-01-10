@@ -22,8 +22,16 @@ public class Controller{
             System.out.println("File contains word that isn't in the right formatting");
         }
     }
+    // method which returns JFrame if there is JFrame on top, else returns null
+    public static JFrame getJFrame(Container panel){
+          while(!(panel instanceof JFrame)){
+              panel = panel.getParent();
+          }
+          return (JFrame) panel;
+    }
 
 
+    //TODO: Have to change the startButton so theres a name game which is started every time you click on start game (?)
     public void startGame(Game game){
         JFrame gameWindow = new JFrame();
         Container content = gameWindow.getContentPane();
@@ -36,12 +44,13 @@ public class Controller{
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             panel.add(x.getInputArticle());
+            panel.add(Box.createRigidArea(new Dimension(10,1)));
             panel.add(x.getWordLabel());
+            panel.add(x.getMarker());
             content.add(panel);
         }
-
-        //TODO: Have to think about how to implement the result button
-        //TODO: which means i have to think about how to store the inputs of JTextField
+        GUI.addResultButton(game, content, entriesForGame);
+        //TODO: have to make window little bigger
         gameWindow.setLocationRelativeTo(null);
         gameWindow.pack();
         gameWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

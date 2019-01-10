@@ -8,8 +8,8 @@ public class Game {
     private int maxNumber;
     private ArrayList<Entry> allEntries;
     private double percentageScore;
-    private double maxPoints;
-    private double pointsReached;
+    private int maxPoints;
+    private int pointsReached;
 
 
     public Game(Controller controller, int wantedNumber){
@@ -34,6 +34,13 @@ public class Game {
             Entry toAdd = allEntries.get(i);
             playingEntries.add(toAdd);
         }
+    }
+    public int getPointsReached(){
+        return pointsReached;
+    }
+
+    public int getMaxPoints(){
+        return maxPoints;
     }
 
     /**
@@ -76,6 +83,14 @@ public class Game {
         return randomNumbers;
     }
 
+    public boolean checkPoint(String input, String shouldBe){
+
+        if (input.equals(shouldBe)) {
+            incrementPoints();
+            return true;
+        }
+        return false;
+    }
 
     public ArrayList<Entry> getPlayingEntries(){
         return playingEntries;
@@ -87,6 +102,11 @@ public class Game {
 
     public void incrementPoints(){
         pointsReached++;
+        percentageScore = (double) pointsReached / (double) maxPoints;
+    }
+
+    public double getPercentage(){
+        return percentageScore;
     }
 
 }

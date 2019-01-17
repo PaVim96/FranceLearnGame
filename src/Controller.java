@@ -32,7 +32,8 @@ public class Controller{
 
 
     //TODO: Have to change the startButton so theres a name game which is started every time you click on start game (?)
-    public void startGame(Game game){
+    public void startGame(int number){
+        Game game = new Game(this, number);
         JFrame gameWindow = new JFrame();
         Container content = gameWindow.getContentPane();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));

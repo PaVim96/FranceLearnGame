@@ -8,10 +8,13 @@ import java.util.stream.Collectors;
 
 public class GUI extends JFrame {
     private Controller control;
+    private int articleWordAmount; // default number for amount of words used in article game
 
     public GUI(int width, int height, Controller control){
+        articleWordAmount = 10;
         this.control = control;
         initGui(width, height);
+
     }
 
     /**
@@ -31,18 +34,51 @@ public class GUI extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         addInfo(panel, "This area is for the game");
         // create a game with a default setting of 10 words
-        Game game = new Game(control, 10);
-        addStartButton(panel, game );
+        addStartButton(panel);
+        addOptionsButton(panel);
         //addOptionsButtons(panel); //TODO: implement
         panel.setVisible(true);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
     }
+    private void addOptionsButton(Container panel){
+        JButton options = new JButton("Set amount of Words");
+        options.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("Options");
+                Container content = frame.getContentPane();
+                content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+                JLabel info = new JLabel("Please enter number of Words to play with below");
+                JTextField number = new JTextField("");
+                number.setMaximumSize(new Dimension(125,100));
+                JButton ok = new JButton("OK");
+                ok.addActionListener(new ActionListener(){
+                   public void actionPerformed(ActionEvent e){
+                       int amount = Integer.parseInt(number.getText());
+                       articleWordAmount = amount;
+                       frame.dispose();
+                    }
+                });
 
-    private void addStartButton(Container pane, Game game ){
+
+
+                content.add(info);
+                content.add(number);
+                content.add(ok);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            }
+        });
+        panel.add(options);
+    }
+    private void addStartButton(Container pane){
         JButton start = new JButton("Start the game");
-        start.addActionListener(e -> control.startGame(game));
+        start.addActionListener(e -> control.startGame(articleWordAmount));
         pane.add(start);
     }
 

@@ -70,6 +70,16 @@ public class Controller{
           return result;
     }
 
+    public static Entry makeEntry(String text){
+          return null;
+    }
+
+
+    private boolean checkInput(String message){
+          String regex = "\\s*[l][ea]\\s*[A-Za-z][a-z]*(\\s*)";
+          return message.matches(regex);
+    }
+
     public boolean addEntry(Entry e){
          boolean isAlreadyThere = checkExisting(e);
 

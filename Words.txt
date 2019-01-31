@@ -1,2 +1,5 @@
 ﻿bouteille : la
-hôtel : lejambon : le
+hôtel : le
+jambon : le
+test : la
+testvier : le

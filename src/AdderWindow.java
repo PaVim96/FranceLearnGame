@@ -63,7 +63,7 @@ public class AdderWindow extends JFrame {
     private ArrayList<Entry> makeEntries(ArrayList<JTextField> inputs){
         ArrayList<Entry> result = new ArrayList<>();
         for(JTextField x : inputs){
-            Entry e = Controller.makeEntry(x.getText());
+            Entry e = control.makeEntry(x.getText());
             if(e != null){
                 result.add(e);
             }

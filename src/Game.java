@@ -16,8 +16,10 @@ public class Game {
         maxNumber = controller.getEntries().size();
         if (wantedNumber > maxNumber)
             numberOfWords = maxNumber;
-        else
+        else {
             numberOfWords = wantedNumber;
+            maxNumber = wantedNumber;
+        }
 
         allEntries = controller.getEntries();
         makePLayingEntries(numberOfWords);
@@ -43,20 +45,6 @@ public class Game {
         return maxPoints;
     }
 
-    /**
-     * method which sets the number of words a user wants to play with
-     * @param amount the wanted amount
-     * @return true if amount is in range of maximum allowed amount, false if wanted amount is too high
-     */
-    public boolean setNumberOfWords(int amount){
-        boolean tooMany = false;
-        if (amount > maxNumber)
-            tooMany = true;
-        else {
-            numberOfWords = amount;
-        }
-        return tooMany;
-    }
 
 
     /**

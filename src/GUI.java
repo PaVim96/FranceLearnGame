@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 
 public class GUI extends JFrame {
-    private Controller control;
+    private static Controller control;
     private int articleWordAmount; // default number for amount of words used in article game
 
     public GUI(int width, int height, Controller control){
@@ -56,8 +56,8 @@ public class GUI extends JFrame {
                 JButton ok = new JButton("OK");
                 ok.addActionListener(new ActionListener(){
                    public void actionPerformed(ActionEvent e){
-                       int amount = Integer.parseInt(number.getText());
-                       articleWordAmount = amount;
+                       articleWordAmount = Integer.parseInt(number.getText());
+                       System.out.println(articleWordAmount);
                        frame.dispose();
                     }
                 });
@@ -209,7 +209,7 @@ public class GUI extends JFrame {
                 panel.revalidate();
                 panel.repaint();
                 JButton endButton = new JButton("End game");
-                JFrame window = Controller.getJFrame(panel);
+                JFrame window = control.getJFrame(panel);
 
                 endButton.addActionListener(new ActionListener() {
                     @Override

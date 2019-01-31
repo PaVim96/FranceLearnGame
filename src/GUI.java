@@ -153,80 +153,22 @@ public class GUI extends JFrame {
         oneEntry.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean wasAdded = control.addEntry(checkEntryInput(panel));
-                if (!wasAdded)
-                    JOptionPane.showMessageDialog(panel, "Your input is already in the list of words");
+                AdderWindow window = new AdderWindow(control, 1);
             }
         });
 
-        oneEntry.addActionListener(new ActionListener(){
+        moreEntry.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 int number = Integer.parseInt(JOptionPane.showInputDialog("How many numbers do you want to add"));
-                makeAddingButton(number);
+                AdderWindow window = new AdderWindow(control, number);
             }
         });
         panel.add(oneEntry);
         panel.add(moreEntry);
     }
 
-        private void makeAddingButton(int number){
-            JFrame frame = new JFrame();
-            Container content = frame.getContentPane();
-            for (int i = 0; i < number; i++){
-                //TODO:  ueberlegen wie ich das hier implementieren soll, benutze vielleicht GamingEntry ?
-            }
 
-        }
-
-    /**
-     * method responsible for handling the input of the JOptionPane
-     * @param panel container jpanel
-     * @return returns entry of input dialog if input was okay
-     */
-    private Entry checkEntryInput(JPanel panel){
-        /*JCheckBox male = new JCheckBox("male");
-        JCheckBox female = new JCheckBox("female");
-        String message = "Add entry here and click whether female or male";
-        Object[] messageDialog = {message, male, female};
-        Entry newEntry = null;
-        String word = "";
-        while(newEntry == null || word.length() == 0 ) {
-            word = JOptionPane.showInputDialog(messageDialog);
-            boolean isMale = male.isSelected();
-            boolean isFemale = female.isSelected();
-            newEntry = Entry.handleInput(panel, word, isMale, isFemale);
-
-            //TODO: create own JOPtionPane in order to make sure one can cancel adding entries
-            if (newEntry == null)
-                JOptionPane.showMessageDialog(panel, "Please select the gender of the word");*/
-        JFrame frame = new JFrame("Adding entry");
-        frame.setLayout(new BoxLayout(frame, BoxLayout.Y_AXIS));
-        Container content = frame.getContentPane();
-        JLabel info = new JLabel("Please enter word to add down below");
-        JTextField word = new JTextField("");
-        JButton ok = new JButton("OK");
-        ok.addActionListener(new ActionListener(){
-            @Override
-                    public void actionPerformed(ActionEvent e){
-                String text = info.getText();
-                Entry toReturn = Controller.makeEntry(text);
-
-        }
-            });
-
-        content.add(info);
-        content.add(word);
-        content.add(ok);
-
-
-
-
-
-
-
-        return null;
-    }
 
     public static void addResultButton(Game game, Container panel, ArrayList<GamingEntry> gameEntries){
         JButton result = new JButton("Click to see results");

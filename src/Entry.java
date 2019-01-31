@@ -10,30 +10,23 @@ public class Entry {
     private String article;
 
 
-    public Entry(String name, String article) throws WordErrorException {
+    public Entry(String name, String article) {
         wordName = name;
         this.article = article;
 
         switch(article){
             case "le": isMale = true; break;
             case "la": isFemale = true; break;
-            default: throw new WordErrorException("Word needs to be either le or la");
         }
     }
     public static Entry handleInput(Container pane, String word, boolean male, boolean female){
         Entry result = null;
-        try {
             if (male){
                 result =  new  Entry(word, "le");
             }
             else if (female){
                 result =  new Entry(word, "la");
             }
-
-        }
-        catch (WordErrorException x){
-            x.printStackTrace();
-        }
         return result;
     }
 

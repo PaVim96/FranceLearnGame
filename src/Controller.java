@@ -51,7 +51,6 @@ public class Controller{
             content.add(panel);
         }
         GUI.addResultButton(game, content, entriesForGame);
-        //TODO: have to make window little bigger
         gameWindow.setLocationRelativeTo(null);
         gameWindow.pack();
         gameWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -71,11 +70,24 @@ public class Controller{
     }
 
     public static Entry makeEntry(String text){
-          return null;
+          boolean ok = checkInput(text);
+
+          if(ok){
+              text = text.trim(); // deletes beginning and ending whitespaces
+              int lastWhite = text.lastIndexOf(" " );
+              String article = text.substring(0, lastWhite).trim();
+              String word = text.substring(lastWhite).trim();
+              return new Entry(word, article);
+
+          }
+          else{
+              return null;
+          }
+
     }
 
 
-    private boolean checkInput(String message){
+    private static boolean checkInput(String message){
           String regex = "\\s*[l][ea]\\s*[A-Za-z][a-z]*(\\s*)";
           return message.matches(regex);
     }

@@ -29,5 +29,5 @@ public interface Controller {
 
     ArrayList<? extends Entry> getEntries();
 
-     void addListOfEntries(ArrayList<? extends Entry> e);
+     boolean addListOfEntries(ArrayList<? extends Entry> e);
 }

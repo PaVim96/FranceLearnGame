@@ -1,1 +1,4 @@
 hallo : bonjour
+bye : boi
+ok : wtf
+was : qeqweqw

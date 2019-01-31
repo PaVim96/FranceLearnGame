@@ -29,7 +29,9 @@ public class ControllerTranslate implements  Controller {
 
     @Override
     public boolean checkInput(String text) {
-        String regex = "\\s*[A-Za-z][a-z]*\\s*[A-Za-z][a-z]\\s*";
+        System.out.println(text);
+        String regex = "\\s*[A-Za-z][a-z]*\\s*[A-Za-z][a-z]*\\s*";
+        System.out.println(text.matches(regex));
         return text.matches(regex);
     }
 
@@ -72,9 +74,10 @@ public class ControllerTranslate implements  Controller {
     @Override
     public Entry makeEntry(String text) {
         boolean ok = checkInput(text);
+        System.out.println(text);
         if(ok){
             text = text.trim(); // deletes beginning and ending whitespaces
-            int lastWhite = text.lastIndexOf(" " );
+            int lastWhite = text.indexOf(" ");
             String german = text.substring(0, lastWhite).trim();
             String french = text.substring(lastWhite).trim();
             return new EntryTranslate(german, french);
@@ -121,7 +124,14 @@ public class ControllerTranslate implements  Controller {
     }
 
     @Override
-    public void addListOfEntries(ArrayList<? extends Entry> e) {
-
+    public boolean addListOfEntries(ArrayList<? extends Entry> e) {
+        boolean result = false;
+        for(Entry x: e) {
+            boolean thisOne = addEntry(x);
+            if (!result && thisOne ){
+                result = true;
+            }
+        }
+        return result;
     }
 }

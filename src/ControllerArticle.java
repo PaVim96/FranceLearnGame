@@ -104,9 +104,14 @@ public class ControllerArticle implements Controller{
          }
     }
 
-    public void addListOfEntries(ArrayList<? extends Entry> e){
-         for(Entry x: e)
-             addEntry(x);
+    public boolean  addListOfEntries(ArrayList<? extends Entry> e){
+        boolean result = false;
+         for(Entry x: e) {
+           boolean thisOne = addEntry(x);
+           if (!result && thisOne)
+               result = true;
+         }
+         return result;
     }
 
     public boolean checkExisting(Entry e){

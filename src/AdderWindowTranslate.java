@@ -31,7 +31,7 @@ public class AdderWindowTranslate extends JFrame {
     private void addEntryLabels(int number){
         for(int i = 0; i < number; i++){
             JPanel whole = new JPanel();
-            whole.setLayout(new BoxLayout(window, BoxLayout.X_AXIS));
+            whole.setLayout(new BoxLayout(whole, BoxLayout.X_AXIS));
             JTextField german = new JTextField("");
             JTextField french = new JTextField("");
             whole.add(german);
@@ -50,7 +50,8 @@ public class AdderWindowTranslate extends JFrame {
             JTextField frenchTextField = (JTextField) x.getComponent(1);
             String french = frenchTextField.getText();
 
-            EntryTranslate e = (EntryTranslate) control.makeEntry(german + french);
+            EntryTranslate e = (EntryTranslate) control.makeEntry(german + " " +  french);
+            System.out.println(e);
             if(e != null){
                 result.add(e);
             }
@@ -67,9 +68,14 @@ public class AdderWindowTranslate extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ArrayList<EntryTranslate> toAdd = makeEntries(inputs);
                 if(toAdd.size() != 0) {
-                    control.addListOfEntries(toAdd);
+                    boolean ok = control.addListOfEntries(toAdd);
                     //Todo: show added entries
-                    String message = toAdd.size() == 1 ? "Added valid entry successfully" : "Added valid entries successfully";
+                    String message;
+                    if(ok)
+                        message = toAdd.size() == 1 ? "Added valid entry successfully" : "Added valid entries successfully";
+                    else
+                        message = "Entry already in file";
+
                     JOptionPane.showMessageDialog(window, message);
                     dispose();
                 }

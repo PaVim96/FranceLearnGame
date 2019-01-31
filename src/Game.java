@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class Game {
     private int numberOfWords;
-    private ArrayList<Entry> playingEntries;
+    private ArrayList<EntryArticle> playingEntries;
     private int maxNumber;
-    private ArrayList<Entry> allEntries;
+    private ArrayList<EntryArticle> allEntries;
     private double percentageScore;
     private int maxPoints;
     private int pointsReached;
@@ -21,7 +21,7 @@ public class Game {
             maxNumber = wantedNumber;
         }
 
-        allEntries = controller.getEntries();
+        allEntries = (ArrayList<EntryArticle>) controller.getEntries();
         makePLayingEntries(numberOfWords);
         percentageScore = 0.0;
         maxPoints = maxNumber;
@@ -33,7 +33,7 @@ public class Game {
         playingEntries = new ArrayList<>();
 
         for(Integer i : randomNumbers){
-            Entry toAdd = allEntries.get(i);
+            EntryArticle toAdd = allEntries.get(i);
             playingEntries.add(toAdd);
         }
     }
@@ -80,7 +80,7 @@ public class Game {
         return false;
     }
 
-    public ArrayList<Entry> getPlayingEntries(){
+    public ArrayList<EntryArticle> getPlayingEntries(){
         return playingEntries;
     }
 

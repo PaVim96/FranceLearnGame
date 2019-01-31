@@ -153,7 +153,12 @@ public class GUI extends JFrame {
         oneEntry.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AdderWindow window = new AdderWindow(control, 1);
+                JFrame window;
+                if (control instanceof ControllerArticle)
+                     window = new AdderWindow(control, 1);
+                else {
+                     window = new AdderWindowTranslate(control, 1);
+                }
             }
         });
 
@@ -161,7 +166,13 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e){
                 int number = Integer.parseInt(JOptionPane.showInputDialog("How many numbers do you want to add"));
-                AdderWindow window = new AdderWindow(control, number);
+                JFrame window;
+                if(control instanceof ControllerArticle) {
+                    window = new AdderWindow(control, number);
+                }
+                else {
+                    window = new AdderWindowTranslate(control,number);
+                }
             }
         });
         panel.add(oneEntry);
@@ -230,7 +241,10 @@ public class GUI extends JFrame {
      * @param height window height
      */
     private void initGui(int width, int height){
-        setTitle("Learning articles");
+        if (control instanceof ControllerArticle)
+            setTitle("Learning articles");
+        else if(control instanceof ControllerTranslate)
+            setTitle("Learning words");
         setSize(new Dimension(width, height));
         Container pane = getContentPane();
         pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));

@@ -1,18 +1,17 @@
-import jdk.nashorn.internal.ir.annotations.Ignore;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AdderWindow extends JFrame {
+public class AdderWindowTranslate extends JFrame {
     private Container window;
     private int numberOfAdd;
     private  Controller control;
-    private  ArrayList<JTextField> inputs;
+    private ArrayList<JPanel> inputs;
 
-    public AdderWindow(Controller control, int number){
+
+    public AdderWindowTranslate(Controller control, int number){
         this.control = control;
         inputs = new ArrayList<>();
         numberOfAdd = number;
@@ -24,13 +23,39 @@ public class AdderWindow extends JFrame {
         initWindow();
     }
 
+    private void addInfo(){
+        JLabel info = new JLabel("Enter german word in first and french word in second textfield");
+        window.add(info);
+    }
+
     private void addEntryLabels(int number){
         for(int i = 0; i < number; i++){
-            JTextField addField = new JTextField("");
-            addField.setMaximumSize(new Dimension(250, 50));
-            inputs.add(addField);
-            window.add(addField);
+            JPanel whole = new JPanel();
+            whole.setLayout(new BoxLayout(window, BoxLayout.X_AXIS));
+            JTextField german = new JTextField("");
+            JTextField french = new JTextField("");
+            whole.add(german);
+            whole.add(french);
+            whole.setMaximumSize(new Dimension(250, 50));
+            inputs.add(whole);
+            window.add(whole);
         }
+    }
+
+    private ArrayList<EntryTranslate> makeEntries(ArrayList<JPanel> inputs){
+        ArrayList<EntryTranslate> result = new ArrayList<>();
+        for(JPanel x : inputs){
+            JTextField germanTextField = (JTextField) x.getComponent(0);
+            String german = germanTextField.getText();
+            JTextField frenchTextField = (JTextField) x.getComponent(1);
+            String french = frenchTextField.getText();
+
+            EntryTranslate e = (EntryTranslate) control.makeEntry(german + french);
+            if(e != null){
+                result.add(e);
+            }
+        }
+        return result;
     }
 
     private void addOkCancel(){
@@ -40,7 +65,7 @@ public class AdderWindow extends JFrame {
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ArrayList<Entry> toAdd = makeEntries(inputs);
+                ArrayList<EntryTranslate> toAdd = makeEntries(inputs);
                 if(toAdd.size() != 0) {
                     control.addListOfEntries(toAdd);
                     //Todo: show added entries
@@ -62,21 +87,6 @@ public class AdderWindow extends JFrame {
         window.add(cancel);
     }
 
-    private ArrayList<Entry> makeEntries(ArrayList<JTextField> inputs){
-        ArrayList<Entry> result = new ArrayList<>();
-        for(JTextField x : inputs){
-            Entry e = control.makeEntry(x.getText());
-            if(e != null){
-                result.add(e);
-            }
-        }
-        return result;
-    }
-
-    private void addInfo(){
-        JLabel info = new JLabel("Enter article and word down below ");
-        window.add(info);
-    }
     private void initWindow(){
         setTitle("Add vocabulary to game");
         setLocationRelativeTo(null);

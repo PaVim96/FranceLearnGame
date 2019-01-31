@@ -18,7 +18,6 @@ public interface Controller {
 
      void startGame(int number);
 
-     ArrayList<GamingEntry> makeGamingEntries(ArrayList<Entry> inputEntries);
 
     void readFile();
 
@@ -28,7 +27,7 @@ public interface Controller {
 
     void writeEntryToFile(Entry e);
 
-    ArrayList<Entry> getEntries();
+    ArrayList<? extends Entry> getEntries();
 
-    public void addListOfEntries(ArrayList<Entry> e);
+     void addListOfEntries(ArrayList<? extends Entry> e);
 }

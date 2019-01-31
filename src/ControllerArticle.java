@@ -2,13 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ControllerArticle implements Controller{
 
 
     private String fileName;
-    private ArrayList<Entry> entries;
+    private ArrayList<EntryArticle> entries;
 
 
       ControllerArticle(String fileName){
@@ -55,19 +54,18 @@ public class ControllerArticle implements Controller{
         gameWindow.setVisible(true);
     }
 
-     public ArrayList<GamingEntry> makeGamingEntries(ArrayList<Entry> inputEntries){
+     public ArrayList<GamingEntry> makeGamingEntries(ArrayList<EntryArticle> inputEntries){
           ArrayList<GamingEntry> result = new ArrayList<>();
-        for (Entry x : inputEntries){
+        for (EntryArticle x : inputEntries){
             String word = x.getWord();
             String article = x.getGender();
             GamingEntry i = new GamingEntry(word,article);
             result.add(i);
         }
-
           return result;
     }
 
-    public Entry makeEntry(String text){
+    public EntryArticle makeEntry(String text){
           boolean ok = checkInput(text);
 
           if(ok){
@@ -75,7 +73,7 @@ public class ControllerArticle implements Controller{
               int lastWhite = text.lastIndexOf(" " );
               String article = text.substring(0, lastWhite).trim();
               String word = text.substring(lastWhite).trim();
-              return new Entry(word, article);
+              return new EntryArticle(word, article);
 
           }
           else{
@@ -91,31 +89,33 @@ public class ControllerArticle implements Controller{
     }
 
     public boolean addEntry(Entry e){
-         boolean isAlreadyThere = checkExisting(e);
+        EntryArticle entry = (EntryArticle) e;
+         boolean isAlreadyThere = checkExisting(entry);
 
          if(!isAlreadyThere){
-             entries.add(e);
-             writeEntryToFile(e);
+             entries.add(entry);
+             writeEntryToFile(entry);
              return true;
          }
          else {
-             System.out.printf("Word %s is already there", e.getWord());
+             System.out.printf("Word %s is already there", entry.getWord());
              System.out.println();
              return false;
          }
     }
 
-    public void addListOfEntries(ArrayList<Entry> e){
+    public void addListOfEntries(ArrayList<? extends Entry> e){
          for(Entry x: e)
              addEntry(x);
     }
 
     public boolean checkExisting(Entry e){
+         EntryArticle entry = (EntryArticle) e;
          boolean result = false;
-         String inputWord = e.getWord();
+         String inputWord = entry.getWord();
 
 
-         for(Entry x: entries){
+         for(EntryArticle x: entries){
              String compareWord = x.getWord();
              if(inputWord.equals(compareWord))
                  result = true;
@@ -141,7 +141,7 @@ public class ControllerArticle implements Controller{
 
                  String article = entry[1].trim();
 
-                 Entry e = new Entry(word,article);
+                 EntryArticle e = new EntryArticle(word,article);
                  entries.add(e);
                  countLine++;
                  line = reader.readLine();
@@ -168,7 +168,7 @@ public class ControllerArticle implements Controller{
          }
     }
 
-    public ArrayList<Entry> getEntries(){
+    public ArrayList<EntryArticle> getEntries(){
           return entries;
     }
 

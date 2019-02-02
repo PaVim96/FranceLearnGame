@@ -11,12 +11,14 @@ public interface Controller {
         return (JFrame) panel;
     }
 
+    ArrayList<GamingEntry> makeGamingEntries(ArrayList<? extends Entry> inputEntries, boolean userInputGerman);
+
     boolean checkExisting(Entry e);
 
     boolean checkInput(String text);
 
 
-     void startGame(int number, boolean translateMode);
+     void startGame(int number, boolean userInputGerman);
 
 
     void readFile();

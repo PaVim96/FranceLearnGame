@@ -27,35 +27,37 @@ public class ControllerArticle implements Controller{
 
 
     //TODO: Have to change the startButton so theres a name game which is started every time you click on start game (?)
+    @SuppressWarnings("unchecked")
     public void startGame(int number, boolean __){
-        Game game = new Game(this, number);
-        System.out.println(game.getMaxPoints());
+        Game game = new GameArticle(this, number);
         JFrame gameWindow = new JFrame();
         Container content = gameWindow.getContentPane();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
 
         //make list of GamingEntries which are needed for the game
-        ArrayList<GamingEntry> entriesForGame = makeGamingEntries(game.getPlayingEntries());
+        ArrayList<GamingEntry> entriesForGame = makeGamingEntries((ArrayList<EntryArticle>) game.getPlayingEntries(), false);
         for(GamingEntry x : entriesForGame){
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-            panel.add(x.getInputArticle());
+            panel.add(x.getInputWord());
             panel.add(Box.createRigidArea(new Dimension(10,1)));
             panel.add(x.getWordLabel());
             panel.add(x.getMarker());
             content.add(panel);
         }
-        GUI.addResultButton(game, content, entriesForGame);
+        game.addResultButton(this, content, entriesForGame, game, false);
         gameWindow.setLocationRelativeTo(null);
         gameWindow.pack();
         gameWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         gameWindow.setVisible(true);
     }
 
-     public ArrayList<GamingEntry> makeGamingEntries(ArrayList<EntryArticle> inputEntries){
+     @SuppressWarnings("unchecked")
+     public ArrayList<GamingEntry> makeGamingEntries(ArrayList<? extends Entry> inputEntries, boolean __){
           ArrayList<GamingEntry> result = new ArrayList<>();
-        for (EntryArticle x : inputEntries){
+          ArrayList<EntryArticle> toIterate = (ArrayList<EntryArticle>) inputEntries;
+        for (EntryArticle x : toIterate){
             String word = x.getWord();
             String article = x.getGender();
             GamingEntry i = new GamingEntry(word,article);

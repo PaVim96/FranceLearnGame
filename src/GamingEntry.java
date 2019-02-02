@@ -4,24 +4,27 @@ import java.awt.event.FocusListener;
 
 public class GamingEntry {
 
-    private JTextField inputArticle;
-    private String article;
+    private JTextField inputWord;
+    private String input;
     private JLabel wordLabel ;
-    private String word;
     private String fieldArticle;
     private JLabel marker;
+    private String shouldBe;
 
-    public GamingEntry(String word, String article){
+    public GamingEntry(String labelWord, String input){
         fieldArticle = "";
-        this.word = word;
-        inputArticle = new JTextField();
-        setFocusListener(inputArticle);
-        this.wordLabel  = new JLabel(word);
-        this.article = article.trim().toLowerCase();
+        inputWord = new JTextField();
+        shouldBe = labelWord;
+        setFocusListener(inputWord);
+        this.wordLabel  = new JLabel(labelWord);
+        this.input = input.trim().toLowerCase();
         marker = new JLabel("");
         marker.setVisible(false);
     }
 
+    public String getShouldBe(){
+        return shouldBe;
+    }
     private void setFocusListener(JTextField field){
         field.addFocusListener(new FocusListener() {
             @Override
@@ -33,7 +36,7 @@ public class GamingEntry {
 
             @Override
             public void focusLost(FocusEvent e) {
-                fieldArticle = inputArticle.getText();
+                fieldArticle = inputWord.getText();
             }
         });
     }
@@ -59,19 +62,16 @@ public class GamingEntry {
     public String getFieldArticle(){
         return fieldArticle;
     }
-    public String getWord(){
-        return word;
-    }
-    public JTextField getInputArticle(){
-        return inputArticle;
+    public JTextField getInputWord(){
+        return inputWord;
     }
 
     public JLabel getWordLabel(){
         return wordLabel;
     }
 
-    public String getArticle(){
-        return article;
+    public String getInput(){
+        return input;
     }
 
 }

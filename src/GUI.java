@@ -78,7 +78,10 @@ public class GUI extends JFrame {
     }
     private void addStartButton(Container pane){
         JButton start = new JButton("Start the game");
-        start.addActionListener(e -> control.startGame(articleWordAmount));
+        if (control instanceof ControllerArticle)
+            start.addActionListener(e -> control.startGame(articleWordAmount, false ));
+        else if (control instanceof ControllerTranslate)
+            start.addActionListener(e -> control.startGame(articleWordAmount,true));
         pane.add(start);
     }
 
@@ -195,6 +198,60 @@ public class GUI extends JFrame {
                 }
                 showResults();
             }
+
+            private void showResults(){
+                int i = 0;
+                for(boolean t: results){
+                    gameEntries.get(i).setMarker(t);
+                    gameEntries.get(i).makeVisible();
+                    i++;
+                }
+                String score = "You scored " + Integer.toString(game.getPointsReached()) + " out of " + Integer.toString(game.getMaxPoints()) + " points!";
+                JLabel scoreText = new JLabel(score);
+                JLabel percentage = new JLabel(Double.toString(game.getPercentage() * 100 ) + "%" );
+                Object[] message = {scoreText, percentage};
+                JOptionPane.showMessageDialog(panel, message);
+                //replace showResultButton with EndApplication button
+                addEndButton(panel);
+            }
+
+            private void addEndButton(Container panel){
+                //remove showResult button, we know its the last item
+                panel.remove(panel.getComponents().length -1);
+                Component[] comp = panel.getComponents();
+                panel.revalidate();
+                panel.repaint();
+                JButton endButton = new JButton("End game");
+                JFrame window = control.getJFrame(panel);
+
+                endButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        window.dispose();
+                    }
+                });
+                panel.add(endButton);
+            }
+        });
+        panel.add(result);
+    }
+
+
+    public static void addResultButton2(GameTranslate game, Container panel, ArrayList<GamingEntry> gameEntries){
+        JButton result = new JButton("Click to see results");
+        result.addActionListener(new ActionListener() {
+            ArrayList<Boolean> results = new ArrayList<>();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for(GamingEntry x : gameEntries){
+                    String input = x.getFieldArticle().trim().toLowerCase();
+                    String shouldBe = x.getArticle();
+                    boolean isGood = game.checkPoint(true,false, input,shouldBe);
+                    results.add(isGood);
+                }
+                showResults();
+            }
+
             private void showResults(){
                 int i = 0;
                 for(boolean t: results){
@@ -233,6 +290,7 @@ public class GUI extends JFrame {
         });
         panel.add(result);
     }
+
 
 
     /**

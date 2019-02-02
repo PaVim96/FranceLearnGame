@@ -27,8 +27,7 @@ public class ControllerArticle implements Controller{
 
 
     //TODO: Have to change the startButton so theres a name game which is started every time you click on start game (?)
-    public void startGame(int number){
-        System.out.println(number);
+    public void startGame(int number, boolean __){
         Game game = new Game(this, number);
         System.out.println(game.getMaxPoints());
         JFrame gameWindow = new JFrame();

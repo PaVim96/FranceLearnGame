@@ -16,7 +16,7 @@ public interface Controller {
     boolean checkInput(String text);
 
 
-     void startGame(int number);
+     void startGame(int number, boolean translateMode);
 
 
     void readFile();

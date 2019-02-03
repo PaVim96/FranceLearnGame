@@ -18,9 +18,6 @@ public interface Entry {
      String getEntryforFile();
 
 
-     int getRank();
-
-     void incrementRank();
 
 
 }

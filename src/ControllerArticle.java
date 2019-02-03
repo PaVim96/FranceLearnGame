@@ -85,7 +85,7 @@ public class ControllerArticle implements Controller{
 
 
     public boolean checkInput(String message){
-          String regex = "\\s*[l][ea]\\s*[A-Za-z][a-z]*(\\s*)";
+          String regex = "\\s*[l][ea]\\s*[A-ZÀ-Úa-zà-ú][a-zà-ú]*(\\s*)";
           return message.matches(regex);
     }
 

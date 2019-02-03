@@ -19,6 +19,42 @@ public class GUI extends JFrame {
     }
 
     /**
+     * method which sets the
+     * @param userFrench
+     */
+    public void setTranslate(boolean userFrench){
+        userInputGerman = userFrench;
+    }
+
+    public void addLanguageOption(){
+        JFrame window = new JFrame();
+        window.setTitle("Change translation mode");
+        Container content = window.getContentPane();
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        JPanel languageOption = new JPanel();
+        languageOption.setLayout(new BoxLayout(languageOption, BoxLayout.X_AXIS));
+        JButton userFrench, userGerman, ok;
+        userFrench = new JButton("translate german");
+        userGerman = new JButton("translate french");
+        ok = new JButton("OK");
+
+        userFrench.addActionListener(e -> setTranslate(false));
+        userGerman.addActionListener(e -> setTranslate(true));
+        ok.addActionListener(e -> window.dispose());
+
+        languageOption.add(userFrench);
+        languageOption.add(userGerman);
+        content.add(languageOption);
+        content.add(ok);
+        window.pack();
+        window.setVisible(true);
+        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        window.setLocationRelativeTo(null);
+
+
+    }
+
+    /**
      * Method which sets the JPanel that is responsible for modifying entries
      * @param panel the container panel which is the content pane of the Window frame
      */
@@ -37,12 +73,22 @@ public class GUI extends JFrame {
         // create a game with a default setting of 10 words
         addStartButton(panel);
         addOptionsButton(panel);
+        if (control instanceof ControllerTranslate){
+            addButtonLanguage(panel);
+        }
         //addOptionsButtons(panel); //TODO: implement
         panel.setVisible(true);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
     }
+
+    private void addButtonLanguage(Container container){
+        JButton setLanguage = new JButton("Set translation mode");
+        setLanguage.addActionListener(e -> addLanguageOption());
+        container.add(setLanguage);
+    }
+
     private void addOptionsButton(Container panel){
         JButton options = new JButton("Set amount of Words");
         options.addActionListener(new ActionListener() {

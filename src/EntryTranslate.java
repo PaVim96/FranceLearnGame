@@ -1,12 +1,10 @@
 public class EntryTranslate implements Entry{
     private String german, french;
-    private int rank;
 
 
     public EntryTranslate(String german, String french){
         this.german = german;
         this.french = french;
-        rank = 0;
     }
 
 
@@ -16,14 +14,6 @@ public class EntryTranslate implements Entry{
 
     public String getFrench(){
         return french;
-    }
-
-    public int getRank(){
-        return rank;
-    }
-
-    public void incrementRank(){
-        rank++;
     }
 
     @Override

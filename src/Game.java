@@ -20,14 +20,13 @@ public interface Game {
         Random generator = new Random();
 
         for(int i = 0; i < numberOfWords; i++){
-            int tries = 0;
+
             int number = generator.nextInt(maxNumber);
             if (randomNumbers.size() == 0 )
                 randomNumbers.add(number);
             else {
-                while (randomNumbers.contains(number) || entries.get(i).getRank() > 3  && tries < 5) {
+                while (randomNumbers.contains(number)) {
                     number = generator.nextInt(maxNumber);
-                    tries ++;
                 }
                 randomNumbers.add(number);
             }

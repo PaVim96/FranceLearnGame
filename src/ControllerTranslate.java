@@ -86,7 +86,7 @@ public class ControllerTranslate implements  Controller {
     @Override
     public boolean checkInput(String text) {
         System.out.println(text);
-        String regex = "\\s*[A-Za-z][a-z]*\\s*[A-Za-z][a-z]*\\s*";
+        String regex = "\\s*[A-Za-zÀ-Úà-ú][a-zà-ú]*\\s*[A-ZÀ-Úa-zà-ú][a-zà-ú]*\\s*";
         System.out.println(text.matches(regex));
         return text.matches(regex);
     }

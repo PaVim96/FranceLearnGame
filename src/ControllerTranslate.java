@@ -86,7 +86,7 @@ public class ControllerTranslate implements  Controller {
     @Override
     public boolean checkInput(String text) {
         System.out.println(text);
-        String regex = "\\s*[A-Za-zÀ-Úà-ú][a-zà-ú]*\\s*[A-ZÀ-Úa-zà-ú][a-zà-ú]*\\s*";
+        String regex = "\\s*[A-Za-zÀ-Úà-ú][a-zà-ú]*\\s*[A-ZÀ-Úa-zà-ú][a-zà-ú]*(/[a-zà-ú]*)?\\s*";
         System.out.println(text.matches(regex));
         return text.matches(regex);
     }
@@ -124,7 +124,6 @@ public class ControllerTranslate implements  Controller {
     @Override
     public Entry makeEntry(String text) {
         boolean ok = checkInput(text);
-        System.out.println(text);
         if(ok){
             text = text.trim(); // deletes beginning and ending whitespaces
             int lastWhite = text.indexOf(" ");

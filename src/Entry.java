@@ -15,7 +15,12 @@ public interface Entry {
      * example  word : le/la
      * @return returns word and format for writing in a file
      */
-    public String getEntryforFile();
+     String getEntryforFile();
+
+
+     int getRank();
+
+     void incrementRank();
 
 
 }

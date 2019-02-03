@@ -33,7 +33,7 @@ public class GameTranslate implements Game {
 
     @Override
     public void makePLayingEntries(int numberOfWords) {
-        ArrayList<Integer> randomNumbers = Game.super.makeRandomNumbersInRange(numberOfWords, allEntries.size());
+        ArrayList<Integer> randomNumbers = Game.super.makeRandomNumbersInRange(numberOfWords, allEntries.size(), allEntries);
         playingEntries = new ArrayList<>();
 
         for(Integer i : randomNumbers){

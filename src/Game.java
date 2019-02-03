@@ -15,18 +15,20 @@ public interface Game {
 
     void incrementPoints();
 
-    default ArrayList<Integer> makeRandomNumbersInRange(int numberOfWords, int maxNumber){
+    default ArrayList<Integer> makeRandomNumbersInRange(int numberOfWords, int maxNumber, ArrayList<? extends Entry> entries){
         ArrayList<Integer> randomNumbers = new ArrayList<>();
         Random generator = new Random();
 
         for(int i = 0; i < numberOfWords; i++){
+            int tries = 0;
             int number = generator.nextInt(maxNumber);
             if (randomNumbers.size() == 0 )
                 randomNumbers.add(number);
             else {
-                while (randomNumbers.contains(number))
+                while (randomNumbers.contains(number) || entries.get(i).getRank() > 3  && tries < 5) {
                     number = generator.nextInt(maxNumber);
-
+                    tries ++;
+                }
                 randomNumbers.add(number);
             }
         }

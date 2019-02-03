@@ -54,6 +54,11 @@ public interface Game {
         for(boolean t: results){
             gameEntries.get(i).setMarker(t);
             gameEntries.get(i).makeVisible();
+            if(!t){
+                String rightText = gameEntries.get(i).getInput();
+                gameEntries.get(i).getInputWord().setText(rightText);
+                gameEntries.get(i).getInputWord().setForeground(Color.RED);
+            }
             i++;
         }
         String score = "You scored " + Integer.toString(game.getPointsReached()) + " out of " + Integer.toString(game.getMaxPoints()) + " points!";

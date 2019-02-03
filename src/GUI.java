@@ -58,7 +58,6 @@ public class GUI extends JFrame {
                 ok.addActionListener(new ActionListener(){
                    public void actionPerformed(ActionEvent e){
                        articleWordAmount = Integer.parseInt(number.getText());
-                       System.out.println(articleWordAmount);
                        frame.dispose();
                     }
                 });

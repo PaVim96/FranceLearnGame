@@ -33,7 +33,7 @@ public class GameTranslate implements Game {
 
     @Override
     public void makePLayingEntries(int numberOfWords) {
-        ArrayList<Integer> randomNumbers = Game.super.makeRandomNumbersInRange(numberOfWords, maxNumber);
+        ArrayList<Integer> randomNumbers = Game.super.makeRandomNumbersInRange(numberOfWords, allEntries.size());
         playingEntries = new ArrayList<>();
 
         for(Integer i : randomNumbers){
@@ -70,8 +70,10 @@ public class GameTranslate implements Game {
     }
 
     private String searchTranslation(String input, ArrayList<EntryTranslate> listToSearch, boolean userInputGerman){
+        System.out.printf("user input was %s", input);
         if (userInputGerman){
             for (EntryTranslate x : listToSearch){
+                System.out.println(x.getGerman());
                 if(x.getGerman().equals(input)) {
                     return x.getFrench();
                 }
@@ -106,7 +108,7 @@ public class GameTranslate implements Game {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (GamingEntry x : playingEntries) {
-                    String input = x.getFieldArticle().trim().toLowerCase();
+                    String input = x.getFieldArticle().trim();
                     String shouldBe = x.getShouldBe();
                     boolean isGood = game.checkPoint(input, shouldBe, userInputGerman);
                     results.add(isGood);

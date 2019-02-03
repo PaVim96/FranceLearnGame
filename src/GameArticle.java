@@ -31,7 +31,7 @@ public class GameArticle implements Game {
     }
 
     public void makePLayingEntries(int numberOfWords) {
-        ArrayList<Integer> randomNumbers = Game.super.makeRandomNumbersInRange(numberOfWords, maxNumber);
+        ArrayList<Integer> randomNumbers = Game.super.makeRandomNumbersInRange(numberOfWords, allEntries.size());
         playingEntries = new ArrayList<>();
 
         for (Integer i : randomNumbers) {

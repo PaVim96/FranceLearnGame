@@ -1,7 +1,1 @@
 ﻿bouteille : la
-hôtel : le
-jambon : le
-test : la
-testvier : le
-testhahah : le
-kacka : le
